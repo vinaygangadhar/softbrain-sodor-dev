@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common.iml" filepath="$PROJECT_DIR$/.idea/modules/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common-build.iml" filepath="$PROJECT_DIR$/.idea/modules/common-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/riscv-sodor-dev.iml" filepath="$PROJECT_DIR$/.idea/modules/riscv-sodor-dev.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/riscv-sodor-dev-build.iml" filepath="$PROJECT_DIR$/.idea/modules/riscv-sodor-dev-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rv32_3stage.iml" filepath="$PROJECT_DIR$/.idea/modules/rv32_3stage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rv32_3stage-build.iml" filepath="$PROJECT_DIR$/.idea/modules/rv32_3stage-build.iml" />
+    </modules>
+  </component>
+</project>
