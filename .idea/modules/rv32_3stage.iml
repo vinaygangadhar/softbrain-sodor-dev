@@ -15,12 +15,12 @@
       <sourceFolder url="file://$MODULE_DIR$/../../rv32_3stage/src/test/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../rv32_3stage/target/scala-2.10/resource_managed/test" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../rv32_3stage/target" />
+      <excludeFolder url="file://$MODULE_DIR$/../../rv32_3stage/target/resolution-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/../../rv32_3stage/target/streams" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="common" exported="" />
-    <orderEntry type="library" name="SBT: org.scala-lang:scala-reflect:2.10.6:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.10.6:jar" level="project" />
-    <orderEntry type="library" name="SBT: edu.berkeley.cs:chisel_2.10:2.2.33:jar" level="project" />
+    <orderEntry type="library" name="edu.berkeley.cs:chisel_2.11:2.2.26" level="project" />
   </component>
 </module>

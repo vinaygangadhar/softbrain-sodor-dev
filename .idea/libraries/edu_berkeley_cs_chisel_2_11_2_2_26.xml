@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="edu.berkeley.cs:chisel_2.11:2.2.26" type="repository">
+    <properties maven-id="edu.berkeley.cs:chisel_2.11:2.2.26" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/edu/berkeley/cs/chisel_2.11/2.2.26/chisel_2.11-2.2.26.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.11.5/scala-library-2.11.5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-reflect/2.11.5/scala-reflect-2.11.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
