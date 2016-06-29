@@ -26,7 +26,7 @@ class HTIFIO() extends Bundle
    val ipi_req = Decoupled(Bits(width = 1))
    val ipi_rep = Decoupled(Bool()).flip
    
-   val mem_req = Decoupled(new CSRReq(addr_width = 64)).flip
+   val mem_req = Decoupled(new CSRReq(addr_width = 64)).flip   //as input
    val mem_rep = new ValidIO(Bits(width = 64))
 }
 

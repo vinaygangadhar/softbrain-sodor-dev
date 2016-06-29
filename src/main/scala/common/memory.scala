@@ -39,10 +39,11 @@ trait MemoryOpConstants
 }
 
 // from the pov of the datapath
+//Memportio by default gives req as o/p
 class MemPortIo(data_width: Int)(implicit conf: SodorConfiguration) extends Bundle 
 {
    val req    = Decoupled(new MemReq(data_width))
-   val resp   = (new ValidIO(new MemResp(data_width))).flip
+   val resp   = (new ValidIO(new MemResp(data_width))).flip       //similar to decoupled except ready signal
   override def clone = { new MemPortIo(data_width).asInstanceOf[this.type] }
 }
 
@@ -88,7 +89,7 @@ class ScratchPadMemory(num_core_ports: Int, num_bytes: Int = (1 << 21), seq_read
 
 
    // constants
-   val idx_lsb = log2Up(num_bytes_per_line) 
+   val idx_lsb = log2Up(num_bytes_per_line)           //3 bits
    val bank_bit = log2Up(num_bytes_per_line/num_banks) 
 
    for (i <- 0 until num_core_ports)

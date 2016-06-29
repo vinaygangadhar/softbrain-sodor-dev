@@ -28,7 +28,7 @@ import Common.Util._
 
 class SodorTileIo extends Bundle  
 {
-   val host     = new HTIFIO()
+val host     = new HTIFIO()         //connected to ports of top io
 }
 
 class SodorTile(implicit val conf: SodorConfiguration) extends Module
@@ -55,9 +55,9 @@ class SodorTile(implicit val conf: SodorConfiguration) extends Module
 
    // HTIF/memory request
    memory.io.htif_port.req.valid     := io.host.mem_req.valid
-   memory.io.htif_port.req.bits.addr := io.host.mem_req.bits.addr.toUInt
+   memory.io.htif_port.req.bits.addr := io.host.mem_req.bits.addr.toUInt         //64b addr
    memory.io.htif_port.req.bits.data := io.host.mem_req.bits.data
-   memory.io.htif_port.req.bits.fcn  := Mux(io.host.mem_req.bits.rw, M_XWR, M_XRD)
+   memory.io.htif_port.req.bits.fcn  := Mux(io.host.mem_req.bits.rw, M_XWR, M_XRD)     //memory func type (load, store)
    io.host.mem_req.ready             := memory.io.htif_port.req.ready     
 
    // HTIF/memory response

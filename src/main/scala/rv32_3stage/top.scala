@@ -30,8 +30,8 @@ class Top extends Module
   
    tile.io.host.reset := reset_signal
    tile.io.host.id := UInt(0,1)
-   tile.io.host.csr_req <> Queue(io.htif.csr_req)
-   io.htif.csr_rep <> Queue(tile.io.host.csr_rep)
+   tile.io.host.csr_req <> Queue(io.htif.csr_req)     //queue of csr requests from top io
+   io.htif.csr_rep <> Queue(tile.io.host.csr_rep)     //queue of csr responses from tile io
 
    tile.io.host.mem_req <> Queue(io.htif.mem_req)
    io.htif.mem_rep <> tile.io.host.mem_rep

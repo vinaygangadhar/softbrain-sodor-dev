@@ -7,6 +7,8 @@
       <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-reflect/2.11.5/scala-reflect-2.11.5.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/chisel_2.11-2.2.26-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

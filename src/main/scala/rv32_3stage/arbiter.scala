@@ -19,8 +19,8 @@ class SodorMemArbiter(implicit val conf: SodorConfiguration) extends Module
    {
       // TODO I need to come up with better names... this is too confusing 
       // from the point of view of the other modules
-      val imem = new MemPortIo(conf.xprlen).flip // instruction fetch
-      val dmem = new MemPortIo(conf.xprlen).flip // load/store 
+      val imem = new MemPortIo(conf.xprlen).flip // instruction fetch from core
+      val dmem = new MemPortIo(conf.xprlen).flip // load/store  from core
       val mem  = new MemPortIo(conf.xprlen)      // the single-ported memory
    }
 
