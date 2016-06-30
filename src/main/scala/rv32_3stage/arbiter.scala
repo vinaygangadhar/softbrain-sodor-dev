@@ -46,6 +46,7 @@ class SodorMemArbiter(implicit val conf: SodorConfiguration) extends Module
    //***************************
    // apply back pressure as needed
    // let dmem always go through, hold up instruction fetch as necessary
+   //dmem given priority
    io.imem.req.ready := !req_fire_dmem
    io.dmem.req.ready := Bool(true)
                 
@@ -65,7 +66,7 @@ class SodorMemArbiter(implicit val conf: SodorConfiguration) extends Module
       io.mem.req.bits.fcn  := io.dmem.req.bits.fcn
       io.mem.req.bits.typ  := io.dmem.req.bits.typ
    }
-   io.mem.req.bits.data := io.dmem.req.bits.data
+   io.mem.req.bits.data := io.dmem.req.bits.data            //imem doesnot require data
 
 
    //***************************

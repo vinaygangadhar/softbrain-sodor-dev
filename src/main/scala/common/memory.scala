@@ -89,13 +89,13 @@ class ScratchPadMemory(num_core_ports: Int, num_bytes: Int = (1 << 21), seq_read
 
 
    // constants
-   val idx_lsb = log2Up(num_bytes_per_line)           //3 bits
-   val bank_bit = log2Up(num_bytes_per_line/num_banks)  //1bit
+   val idx_lsb = log2Up(num_bytes_per_line)           //3rd
+   val bank_bit = log2Up(num_bytes_per_line/num_banks)  //2nd bit
 
    for (i <- 0 until num_core_ports)
    {
       if (seq_read) 
-         io.core_ports(i).resp.valid := Reg(next = io.core_ports(i).req.valid)
+         io.core_ports(i).resp.valid := Reg(next = io.core_ports(i).req.valid)         //response will be ready next clock in seq read
       else 
          io.core_ports(i).resp.valid := io.core_ports(i).req.valid
       
@@ -106,22 +106,24 @@ class ScratchPadMemory(num_core_ports: Int, num_bytes: Int = (1 << 21), seq_read
       val req_data       = io.core_ports(i).req.bits.data
       val req_fcn        = io.core_ports(i).req.bits.fcn
       val req_typ        = io.core_ports(i).req.bits.typ
-      val byte_shift_amt = io.core_ports(i).req.bits.addr(1,0)
+      val byte_shift_amt = io.core_ports(i).req.bits.addr(1,0)    //last 2 bits
       val bit_shift_amt  = Cat(byte_shift_amt, UInt(0,3))
 
       // read access
       val r_data_idx = Reg(outType=UInt())
       val r_bank_idx = Reg(outType=Bool())
 
+      //32bit address right shifted by 3
       val data_idx = req_addr >> UInt(idx_lsb)
       val bank_idx = req_addr(bank_bit)
       val read_data_out = Bits()
       val rdata_out = Bits()
 
+      //read or load func from mem banks
       if (seq_read)
       {
          read_data_out := Mux(r_bank_idx, data_bank1(r_data_idx), data_bank0(r_data_idx))
-         rdata_out     := LoadDataGen((read_data_out >> Reg(next=bit_shift_amt)), Reg(next=req_typ))
+         rdata_out     := LoadDataGen((read_data_out >> Reg(next=bit_shift_amt)), Reg(next=req_typ))     //next cycle
       }
       else
       {
@@ -133,11 +135,11 @@ class ScratchPadMemory(num_core_ports: Int, num_bytes: Int = (1 << 21), seq_read
 
 
       // write access
-      when (req_valid && req_fcn === M_XWR)
+      when (req_valid && req_fcn === M_XWR)        //Store function
       {
          // move the wdata into position on the sub-line
          val wdata = StoreDataGen(req_data, req_typ) 
-         val wmask = (StoreMask(req_typ) << bit_shift_amt)(31,0)
+         val wmask = (StoreMask(req_typ) << bit_shift_amt)(31,0)        //mask is based on the req type
 
          when (bank_idx)
          {
@@ -148,7 +150,7 @@ class ScratchPadMemory(num_core_ports: Int, num_bytes: Int = (1 << 21), seq_read
             data_bank0.write(data_idx, wdata, wmask)
          }
       }
-      .elsewhen (req_valid && req_fcn === M_XRD)
+      .elsewhen (req_valid && req_fcn === M_XRD)      //read access
       {
          r_data_idx := data_idx
          r_bank_idx := bank_idx
@@ -156,15 +158,16 @@ class ScratchPadMemory(num_core_ports: Int, num_bytes: Int = (1 << 21), seq_read
    }  
 
 
-   // HTIF -------
+   // HTIF ------- Data_width = 64
    
-   io.htif_port.req.ready := Bool(true) // for now, no back pressure
+   io.htif_port.req.ready := Bool(true) // for now, no back pressure       //ready to accept commands
    // synchronous read
    val htif_idx = Reg(UInt())
    htif_idx := io.htif_port.req.bits.addr >> UInt(idx_lsb)
-   
-   io.htif_port.resp.valid     := Reg(next=io.htif_port.req.valid && io.htif_port.req.bits.fcn === M_XRD)
-   io.htif_port.resp.bits.data := Cat(data_bank1(htif_idx), data_bank0(htif_idx))
+
+   //next cycle -- read to htif port
+   io.htif_port.resp.valid     := Reg(next=io.htif_port.req.valid && io.htif_port.req.bits.fcn === M_XRD)      //read memory
+   io.htif_port.resp.bits.data := Cat(data_bank1(htif_idx), data_bank0(htif_idx))                           //both bansk read - entire 8B line
 
    when (io.htif_port.req.valid && io.htif_port.req.bits.fcn === M_XWR)
    {
