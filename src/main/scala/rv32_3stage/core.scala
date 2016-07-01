@@ -24,9 +24,9 @@ class Core(resetSignal: Bool = null)(implicit conf: SodorConfiguration) extends 
    val cpath  = Module(new CtlPath())
    val dpath  = Module(new DatPath())
 
-   frontend.io.imem <> io.imem
-   frontend.io.cpu <> cpath.io.imem
-   frontend.io.cpu <> dpath.io.imem
+   frontend.io.imem <> io.imem                //connection to actual imem
+   frontend.io.cpu <> cpath.io.imem           //frontendcpuio type
+   frontend.io.cpu <> dpath.io.imem           //fronedncpuio type
 
    cpath.io.ctl  <> dpath.io.ctl
    cpath.io.dat  <> dpath.io.dat

@@ -83,7 +83,7 @@ class FrontEnd(implicit conf: SodorConfiguration) extends Module
    //**********************************
    // Pipeline State Registers
    val if_reg_valid  = Reg(init=Bool(false))
-   val if_reg_pc     = Reg(init=UInt(START_ADDR-4,conf.xprlen))
+   val if_reg_pc     = Reg(init=UInt(START_ADDR-4,conf.xprlen))            //0x1fc
     
    val exe_reg_valid = Reg(init=Bool(false))
    val exe_reg_pc    = Reg(UInt(width=conf.xprlen))
@@ -98,14 +98,15 @@ class FrontEnd(implicit conf: SodorConfiguration) extends Module
    val if_pc_plus4 = (if_reg_pc + UInt(4, conf.xprlen))               
 
    // stall IF/EXE if backend not ready
-   when (io.cpu.resp.ready)
+     //update the PC based on the backend pressure
+   when (io.cpu.resp.ready)                  //resp ready -- ready to take pc and inst
    {
       if_pc_next := if_pc_plus4
 
       when (io.cpu.req.valid)
       {
          // datapath is redirecting the PC stream (misspeculation)
-         if_pc_next := io.cpu.req.bits.pc
+         if_pc_next := io.cpu.req.bits.pc                      //pc bits incoming based on valid
       }
    }
    .otherwise
@@ -113,6 +114,7 @@ class FrontEnd(implicit conf: SodorConfiguration) extends Module
       if_pc_next  := if_reg_pc
    }
 
+   //clock the pc_next and valid signals
    when (io.cpu.resp.ready)
    {
       if_reg_pc    := if_pc_next
@@ -120,18 +122,23 @@ class FrontEnd(implicit conf: SodorConfiguration) extends Module
    }
 
    // set up outputs to the instruction memory
+   //data arrives next clock cycle in case of seq read
    io.imem.req.bits.addr := if_pc_next
    io.imem.req.valid     := if_val_next
    io.imem.req.bits.fcn  := M_XRD
-   io.imem.req.bits.typ  := MT_WU
+   io.imem.req.bits.typ  := MT_WU               //32bits unsigned pc
 
 
    //**********************************
    // Inst Fetch/Return Stage
 
+   //1 cycle later
+   //resp.ready is a back pressure siganl from control and datapath
+   //to frontend cpu io
    when (io.cpu.resp.ready)
    {
-      exe_reg_valid := io.imem.resp.valid && if_reg_valid && !io.cpu.req.valid
+      //clock them
+      exe_reg_valid := io.imem.resp.valid && if_reg_valid && !io.cpu.req.valid         //io.cpu.req.valid is the taken branch
       exe_reg_pc    := if_reg_pc
       exe_reg_inst  := io.imem.resp.bits.data
    }

@@ -73,11 +73,11 @@ class DatPath(implicit conf: SodorConfiguration) extends Module
                  Mux(io.ctl.pc_sel === PC_JR,    exe_jump_reg_target,
                                                  exe_brjmp_target)) // PC_BR or PC_J
                                                     
-   io.imem.req.bits.pc := take_pc
+   io.imem.req.bits.pc := take_pc            //to frontend cpuio
 
    
    //**********************************
-   // Execute Stage
+   // Execute Stage -- from frontend
    val exe_valid = io.imem.resp.valid
    val exe_inst  = io.imem.resp.bits.inst
    val exe_pc    = io.imem.resp.bits.pc

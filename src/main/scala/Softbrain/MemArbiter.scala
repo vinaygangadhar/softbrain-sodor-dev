@@ -72,7 +72,7 @@ class SBMemArbiter(implicit val conf: SodorConfiguration) extends Module
   //***************************
   // hook up responses
 
-  io.imem.resp.valid := req_fire_imem
+  io.imem.resp.valid := req_fire_imem     //coulde also be io.mem.resp.valid
   io.dmem.resp.valid := req_fire_dmem
   io.imem.resp.bits.data := io.mem.resp.bits.data
   io.dmem.resp.bits.data := io.mem.resp.bits.data
