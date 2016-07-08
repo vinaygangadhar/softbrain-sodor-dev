@@ -17,11 +17,13 @@ package Sodor
 
 import Chisel._
 import Node._
-
 import Constants._
 import Common._
 import Common.Constants._
+import Softbrain._
+import SBConstants._
 
+//DattoCtrlIo are signals generated in datapath
 class DatToCtlIo(implicit conf: SodorConfiguration) extends Bundle() 
 {
    val br_eq  = Bool(OUTPUT)
@@ -42,6 +44,8 @@ class DpathIo(implicit conf: SodorConfiguration) extends Bundle()
    val dmem = new MemPortIo(conf.xprlen)
    val ctl  = new CtrlSignals().asInput
    val dat  = new DatToCtlIo()                     //as output
+
+   val sbio = new SbIo(SB_CMD_WIDTH).flip
 }
 
 class DatPath(implicit conf: SodorConfiguration) extends Module 
@@ -56,9 +60,12 @@ class DatPath(implicit conf: SodorConfiguration) extends Module
    val wb_reg_ctrl     = Reg(new CtrlSignals)
    val wb_reg_alu      = Reg(Bits(width=conf.xprlen))
    val wb_reg_csr_addr = Reg(UInt())
-   val wb_reg_wbaddr   = Reg(UInt(width=log2Up(32)))
+   val wb_reg_wbaddr   = Reg(UInt(width=log2Up(32)))            //32 regs
    
    val wb_hazard_stall = Bool() // hazard detected, stall in IF/EXE required
+
+   //stall from sb
+   val sb_core_stall = Bool(false)        //false initially
 
    //**********************************
    // Instruction Fetch Stage
@@ -66,7 +73,7 @@ class DatPath(implicit conf: SodorConfiguration) extends Module
    val exe_jump_reg_target = UInt()
    val exception_target    = UInt()
 
-   io.imem.resp.ready := !wb_hazard_stall // stall IF if we detect a WB->EXE hazard
+   io.imem.resp.ready := (!wb_hazard_stall &&  !sb_core_stall)           // stall IF if we detect a WB->EXE hazard (RAW) and //stall signal from SB
 
    // if front-end mispredicted, tell it which PC to take
    val take_pc = Mux(io.ctl.pc_sel === PC_EXC,   exception_target,
@@ -90,10 +97,13 @@ class DatPath(implicit conf: SodorConfiguration) extends Module
    val wb_wbdata    = Bits(width = conf.xprlen)
  
 
-   // Hazard Stall Logic 
-   wb_hazard_stall := ((wb_reg_wbaddr === exe_rs1_addr) && (exe_rs1_addr != UInt(0)) && wb_reg_ctrl.rf_wen && !wb_reg_ctrl.bypassable) || 
+   // Hazard Stall Logic -- RAW hazard
+   wb_hazard_stall := ((wb_reg_wbaddr === exe_rs1_addr) && (exe_rs1_addr != UInt(0)) && wb_reg_ctrl.rf_wen && !wb_reg_ctrl.bypassable) ||
                       ((wb_reg_wbaddr === exe_rs2_addr) && (exe_rs2_addr != UInt(0)) && wb_reg_ctrl.rf_wen && !wb_reg_ctrl.bypassable)
 
+
+   //stall logic from sb interface
+   sb_core_stall := io.sbio.core_stall
 
    // Register File
    val regfile = Mem(Bits(width = conf.xprlen), 32)

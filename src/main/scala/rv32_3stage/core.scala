@@ -40,6 +40,12 @@ class Core(resetSignal: Bool = null)(implicit conf: SodorConfiguration) extends 
    
    dpath.io.host <> io.host
 
+   //sb interfaces only with backend stage and hence need to interface with
+  //dpath and cpath only
+
+  dpath.io.sbio <> io.sbio
+  cpath.io.sbio <> io.sbio
+
 }
 
 }

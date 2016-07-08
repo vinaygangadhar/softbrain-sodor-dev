@@ -10,11 +10,12 @@ package Sodor
 
 import Chisel._
 import Node._
-
 import Common._
 import Common.Instructions._
 import Constants._
 import ALU._
+import Softbrain._
+import SBConstants._
 
 class CtrlSignals extends Bundle() 
 {
@@ -43,6 +44,9 @@ class CpathIo(implicit conf: SodorConfiguration) extends Bundle()
    val dmem = new MemPortIo(conf.xprlen)
    val dat  = new DatToCtlIo().flip()
    val ctl  = new CtrlSignals().asOutput
+
+   val sbio = new SbIo(SB_CMD_WIDTH).flip
+
    override def clone = { new CpathIo().asInstanceOf[this.type] }
 }
 
