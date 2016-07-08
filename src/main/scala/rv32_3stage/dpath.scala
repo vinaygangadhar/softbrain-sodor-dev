@@ -41,7 +41,7 @@ class DpathIo(implicit conf: SodorConfiguration) extends Bundle()
    val imem = new FrontEndCpuIO().flip()
    val dmem = new MemPortIo(conf.xprlen)
    val ctl  = new CtrlSignals().asInput
-   val dat  = new DatToCtlIo()
+   val dat  = new DatToCtlIo()                     //as output
 }
 
 class DatPath(implicit conf: SodorConfiguration) extends Module 

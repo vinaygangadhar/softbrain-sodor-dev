@@ -22,8 +22,9 @@ object BuildSettings extends Build {
   lazy val common = Project("common", file("common"), settings = buildSettings
     ++Seq(scalaSource in Compile := file("@abs_top_srcdir@/src/main/scala/common")))
   lazy val rv32_3stage = Project("rv32_3stage", file("rv32_3stage"), settings = buildSettings ++ chipSettings
-    ++Seq(scalaSource in Compile := file("@abs_top_srcdir@/src/main/scala/rv32_3stage"))) dependsOn(common)
-
+    ++Seq(scalaSource in Compile := file("@abs_top_srcdir@/src/main/scala/rv32_3stage"))) dependsOn(common) dependsOn(softbrain)
+  lazy val softbrain = Project("softbrain", file("softbrain"), settings = buildSettings ++ chipSettings
+    ++Seq(scalaSource in Compile := file("@abs_top_srcdir@/src/main/scala/softbrain"))) dependsOn(common)
 
   val elaborateTask = InputKey[Unit]("elaborate", "convert chisel components into backend source code")
   val makeTask = InputKey[Unit]("make", "trigger backend-specific makefile command")

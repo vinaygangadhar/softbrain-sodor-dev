@@ -54,7 +54,7 @@ CHISEL_ARGS_DEBUG := $(CHISEL_ARGS)-debug --debug --vcd --ioDebug
 vpath %.cpp  $(srcDir)/emulator/$(MK_TARGET_PROC)
 vpath %.a    $(buildLibDir)
 
-generated-src/$(MODEL).cpp: $(srcDir)/src/main/scala/${MK_TARGET_PROC}/*.scala $(srcDir)/src/main/scala/common/*.scala
+generated-src/$(MODEL).cpp: $(srcDir)/src/main/scala/${MK_TARGET_PROC}/*.scala $(srcDir)/src/main/scala/common/*.scala $(srcDir)/src/main/scala/softbrain/*.scala
 	cd $(buildDir) && $(SBT) "project ${MK_TARGET_PROC}" "run $(CHISEL_ARGS)"
 
 generated-src-debug/$(MODEL).cpp: $(srcDir)/src/${MK_TARGET_PROC}/*.scala $(srcDir)/src/common/*.scala

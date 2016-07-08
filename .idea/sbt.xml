@@ -13,6 +13,8 @@
             <option value="$PROJECT_DIR$/project" />
             <option value="$PROJECT_DIR$/rv32_3stage" />
             <option value="$PROJECT_DIR$/rv32_3stage/project" />
+            <option value="$PROJECT_DIR$/softbrain" />
+            <option value="$PROJECT_DIR$/softbrain/project" />
           </set>
         </option>
         <option name="resolveSbtClassifiers" value="true" />

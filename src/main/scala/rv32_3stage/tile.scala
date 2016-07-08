@@ -22,13 +22,13 @@ package Sodor
 import Chisel._
 import Node._
 import Constants._
-import Common._   
-import Common.Util._   
+import Common._
+import Common.Util._
+import Softbrain._
 
 
-class SodorTileIo extends Bundle  
-{
-val host     = new HTIFIO()         //connected to ports of top io
+class SodorTileIo extends Bundle{
+   val host     = new HTIFIO()         //connected to ports of top io
 }
 
 class SodorTile(implicit val conf: SodorConfiguration) extends Module
@@ -40,6 +40,10 @@ class SodorTile(implicit val conf: SodorConfiguration) extends Module
    val core   = Module(new Core(resetSignal = io.host.reset))
    val memory = Module(new ScratchPadMemory(num_core_ports = 2, seq_read = true)) 
    val arbiter = Module(new SodorMemArbiter) // only used for single port memory
+
+   //softbrain interface
+   val sb = Module(new SoftbrainTop)
+
 
    if (NUM_MEMORY_PORTS == 1)
    {
@@ -53,6 +57,9 @@ class SodorTile(implicit val conf: SodorConfiguration) extends Module
       core.io.dmem <> memory.io.core_ports(1)
    }
 
+   //SB interface to Core
+   core.io.sbio <> sb.io.sbio
+
    // HTIF/memory request
    memory.io.htif_port.req.valid     := io.host.mem_req.valid
    memory.io.htif_port.req.bits.addr := io.host.mem_req.bits.addr.toUInt         //64b addr
@@ -64,7 +71,7 @@ class SodorTile(implicit val conf: SodorConfiguration) extends Module
    io.host.mem_rep.valid := memory.io.htif_port.resp.valid
    io.host.mem_rep.bits := memory.io.htif_port.resp.bits.data
 
-   core.io.host <> io.host
+   core.io.host <> io.host                   //need to knwo why this is needed (probably CSR registers)
 }
  
 }

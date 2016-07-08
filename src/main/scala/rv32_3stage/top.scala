@@ -8,7 +8,7 @@ import Common.Util._
 import ReferenceChipBackend._
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.HashMap
-
+import Softbrain._
 
 object ReferenceChipBackend {
   val initMap = new HashMap[Module, Bool]()

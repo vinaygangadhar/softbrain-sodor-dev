@@ -8,12 +8,15 @@ package Sodor
 import Chisel._
 import Node._
 import Common._
+import Softbrain._
+import SBConstants._
 
 class CoreIo(implicit conf: SodorConfiguration) extends Bundle 
 {
   val host = new HTIFIO()
   val imem = new MemPortIo(conf.xprlen)
   val dmem = new MemPortIo(conf.xprlen)
+  val sbio = new SbIo(SB_CMD_WIDTH).flip
 }
 
 class Core(resetSignal: Bool = null)(implicit conf: SodorConfiguration) extends Module(_reset = resetSignal)
@@ -36,6 +39,7 @@ class Core(resetSignal: Bool = null)(implicit conf: SodorConfiguration) extends 
    dpath.io.dmem <> io.dmem
    
    dpath.io.host <> io.host
+
 }
 
 }

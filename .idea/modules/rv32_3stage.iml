@@ -21,6 +21,10 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="common" exported="" />
+    <orderEntry type="module" module-name="softbrain" exported="" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scala-reflect:2.10.6:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.10.6:jar" level="project" />
+    <orderEntry type="library" name="SBT: edu.berkeley.cs:chisel_2.10:2.2.34:jar" level="project" />
     <orderEntry type="library" name="edu.berkeley.cs:chisel_2.11:2.2.26" level="project" />
   </component>
 </module>

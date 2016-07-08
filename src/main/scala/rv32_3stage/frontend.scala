@@ -115,7 +115,7 @@ class FrontEnd(implicit conf: SodorConfiguration) extends Module
    }
 
    //clock the pc_next and valid signals
-   when (io.cpu.resp.ready)
+   when (io.cpu.resp.ready)                     //from datapath and cpath
    {
       if_reg_pc    := if_pc_next
       if_reg_valid := if_val_next
