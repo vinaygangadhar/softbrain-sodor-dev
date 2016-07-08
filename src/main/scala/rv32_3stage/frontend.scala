@@ -111,7 +111,7 @@ class FrontEnd(implicit conf: SodorConfiguration) extends Module
    }
    .otherwise
    {
-      if_pc_next  := if_reg_pc               //backend stalled
+      if_pc_next  := if_reg_pc               //backend  stalled
    }
 
    //clock the pc_next and valid signals
