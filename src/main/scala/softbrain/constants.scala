@@ -1,7 +1,7 @@
 /**
   * Created by vinaygangadhar on 6/29/2016.
   */
-package Softbrain
+package softbrain
 package constants
 {
 

@@ -1,11 +1,11 @@
 # Declaration of common variables
 
-RISCV           := /usr/local
-srcDir          := /Users/vinaygangadhar/IdeaProjects/riscv-sodor-dev
+RISCV           := /usr/local/
+srcDir          := /Users/vinaygangadhar/IdeaProjects/softbrain-sodor-dev
 installTop      := $(DESTDIR)$(RISCV)
 buildIncludeDir := $(RISCV)/include
 buildLibDir     := $(RISCV)/lib
-buildDir        := /Users/vinaygangadhar/IdeaProjects/riscv-sodor-dev
+buildDir        := /Users/vinaygangadhar/IdeaProjects/softbrain-sodor-dev
 
 # Paths to different source trees
 chiseldir       := 

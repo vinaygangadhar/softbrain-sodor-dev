@@ -4,10 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common.iml" filepath="$PROJECT_DIR$/.idea/modules/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common-build.iml" filepath="$PROJECT_DIR$/.idea/modules/common-build.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/riscv-sodor-dev.iml" filepath="$PROJECT_DIR$/.idea/modules/riscv-sodor-dev.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/riscv-sodor-dev-build.iml" filepath="$PROJECT_DIR$/.idea/modules/riscv-sodor-dev-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/rv32_3stage.iml" filepath="$PROJECT_DIR$/.idea/modules/rv32_3stage.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/rv32_3stage-build.iml" filepath="$PROJECT_DIR$/.idea/modules/rv32_3stage-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/softbrain-sodor-dev.iml" filepath="$PROJECT_DIR$/.idea/modules/softbrain-sodor-dev.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/softbrain-sodor-dev-build.iml" filepath="$PROJECT_DIR$/.idea/modules/softbrain-sodor-dev-build.iml" />
     </modules>
   </component>
 </project>

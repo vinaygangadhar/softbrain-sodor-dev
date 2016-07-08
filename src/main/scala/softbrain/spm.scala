@@ -1,4 +1,4 @@
-package Softbrain
+package softbrain
 
 import Chisel._
 import Node._

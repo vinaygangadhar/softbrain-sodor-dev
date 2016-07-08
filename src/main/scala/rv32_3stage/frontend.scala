@@ -63,7 +63,7 @@ class FrontEndResp(xprlen: Int) extends Bundle
 
 class FrontEndCpuIO(implicit conf: SodorConfiguration) extends Bundle
 {
-   val req = new ValidIO(new FrontEndReq(conf.xprlen)).flip
+   val req = new ValidIO(new FrontEndReq(conf.xprlen)).flip          //32bit instructions
    val resp = new DecoupledIO(new FrontEndResp(conf.xprlen))
  
    val debug = new Bundle
@@ -111,7 +111,7 @@ class FrontEnd(implicit conf: SodorConfiguration) extends Module
    }
    .otherwise
    {
-      if_pc_next  := if_reg_pc
+      if_pc_next  := if_reg_pc               //backend stalled
    }
 
    //clock the pc_next and valid signals

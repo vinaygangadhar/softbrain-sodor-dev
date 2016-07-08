@@ -1,10 +1,10 @@
 /**
   * Created by vinaygangadhar on 6/29/2016.
   */
-package Softbrain
+package softbrain
 
 import Chisel._
-import Softbrain.constants.__
+import softbrain.constants.__
 
 //Might need to import the Sodor constants too
 
