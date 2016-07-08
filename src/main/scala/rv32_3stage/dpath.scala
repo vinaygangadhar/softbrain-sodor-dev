@@ -103,7 +103,7 @@ class DatPath(implicit conf: SodorConfiguration) extends Module
 
 
    //stall logic from sb interface
-   sb_core_stall := io.sbio.core_stall
+   sb_core_stall := io.sbio.core_stall.stall
 
    // Register File
    val regfile = Mem(Bits(width = conf.xprlen), 32)

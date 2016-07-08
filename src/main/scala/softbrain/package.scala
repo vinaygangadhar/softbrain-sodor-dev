@@ -10,8 +10,7 @@ import Softbrain.constants._
 
 object SBConstants extends
   constants.DataPathConstants with
-  constants.CtrlPathConstants with
-  Common.MemoryOpConstants
+  constants.CtrlPathConstants
 {
 
 }
